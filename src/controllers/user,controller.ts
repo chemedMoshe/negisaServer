@@ -1,13 +1,17 @@
 import { Request,Response } from "express"
 import UserService from "../service/userService"
+import { mongo, MongooseError } from "mongoose";
 
 export const createNewUser = async(req:Request,res:Response) =>{
     try {
         const result = await UserService.createUser(req.body)
-        res.status(201).send(result)
+        console.log(result);
+        
+        res.status(201).json({err:false,result})
     }
-    catch (err) {   
-        res.status(400).send(`${err}`)
+    catch (err) {  
+        
+        res.status(400).json({err:true,result:{message:`${err}`}})
     } 
 }
 

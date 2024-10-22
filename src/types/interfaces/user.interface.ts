@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import { ICredit } from "./credit.Interface";
 
 export interface IUser extends Document {
-    _id?: mongoose.Types.ObjectId
+    _id?: mongoose.Types.ObjectId|unknown
     username: string;
-    personalnumber: number;
+    personalnumber: string;
     sumcredit: number;
     joindate: Date;
-    historycredits:ICredit[]
+    historycredits:mongoose.Types.ObjectId[]
 }

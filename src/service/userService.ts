@@ -8,33 +8,35 @@ export default class UserService {
     public static checkResquest(user: IUserDTO) {
         const { username, personalnumber } = user
         if (!username || !personalnumber) {
-            throw  ("Username and personal number are required")
+            throw ("היי.. סמנו לב שלא מלאת את כל הפרטים ההכרחיים")
         }
         return user
     }
 
     public static async findUser(user: IUserDTO): Promise<IUser | null> {
         this.checkResquest(user)
-        const { username, personalnumber } = user
-        const userFromDB = await DataLayer.checkIfExist<IUser>({ username, personalnumber }, UserDB)
+        const { personalnumber } = user
+        const userFromDB = await DataLayer.checkIfExist<IUser>( personalnumber , UserDB)
+        console.log(userFromDB,'user');
+        
         return userFromDB
     }
 
-    public static async createUser(user: IUserDTO):Promise<string> {
+    public static async createUser(user: IUserDTO): Promise<{ message: string, user: IUserDTO }> {
         try {
             this.checkResquest(user)
             if ((await this.findUser(user))) {
-                throw  ("User already exists")
+                throw ("המספר כבר קיים במערכת")
             }
             await DataLayer.createItem<IUser>(user, UserDB)
-            return "User created"
+            return {message:"User created",user}
         }
         catch (err) {
-            throw  Error(`${err}`)
+            throw Error(`${err}`)
         }
     }
 
-    public static async deleteUser(user: IUserDTO) :Promise<string> {
+    public static async deleteUser(user: IUserDTO): Promise<string> {
         this.checkResquest(user)
         try {
             const userFromDB: IUser | null = await this.findUser(user)
@@ -49,26 +51,25 @@ export default class UserService {
         }
     }
 
-    public static async updateUser(user: IUserDTO, idUser: string):Promise<string> {
-        this.checkResquest(user)
+    public static async updateUser(user: IUserDTO | IUser, idUser: string | mongoose.Types.ObjectId): Promise<string> {
         try {
             const ObjId = new mongoose.Types.ObjectId(idUser)
-            const userFromDB: IUser | null = await DataLayer.findItemById<IUser>(ObjId, UserDB)
+            const userFromDB: IUser | null = await DataLayer.findOneItemById<IUser>(ObjId, UserDB)
             if (!userFromDB) {
                 throw new Error("User dosn't exists")
             }
-            await DataLayer.updateItem<IUser>(user, userFromDB._id!, UserDB)
+            await DataLayer.updateItem<IUser>(user, userFromDB._id! as mongoose.Types.ObjectId, UserDB)
             return "User updated"
 
         } catch (err) {
-            throw  Error(`${err}`)
+            throw Error(`${err}`)
         }
     }
 
-    public static async getUserById(idUser: string): Promise<IUser> {
+    public static async getUserById(idUser: string | mongoose.Types.ObjectId): Promise<IUser> {
         const ObjId = new mongoose.Types.ObjectId(idUser)
         try {
-            const userFromDB: IUser | null = await DataLayer.findItemById<IUser>(ObjId, UserDB)
+            const userFromDB: IUser | null = await DataLayer.findOneItemById<IUser>(ObjId, UserDB)
             if (!userFromDB) {
                 throw new Error("User dosn't exists")
             }

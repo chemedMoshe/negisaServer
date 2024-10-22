@@ -5,7 +5,7 @@ import ICreditDTO from "./CreditDTO";
 export default interface IUserDTO {
     _id?: mongoose.Types.ObjectId;
     username: string;
-    personalnumber: number;
+    personalnumber: string;
     sumcredit?: number;
     historycredits?: ICreditDTO[];
 }

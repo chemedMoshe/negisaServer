@@ -5,14 +5,16 @@ export const userSchema = new mongoose.Schema<IUser>({
     username: {
         type: String,
         required: [true, "Firstname is required"],
-        unique: true//, "Username already exists"],
+        
     },
 
     personalnumber: {
-        type: Number,
+        type: String,
         required: [true, "Lastname is required"],
-        unique: true//, "Personal number already exists"]
+        unique: true,//, "Personal number already exists"]
+        
     },
+    
     sumcredit: {
         type: Number,
         default: 0
