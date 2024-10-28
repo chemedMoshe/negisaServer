@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "app.ts",
   "scripts": {
-    "start": "ts-node --esm ./dist/app.js"
+    "start": "ts-node --esm ./dist/app.js",
+    "build":"ts-node --esm ./dist/app.js"
   },
   "keywords": [],
   "author": "",
