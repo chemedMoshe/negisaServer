@@ -6,6 +6,7 @@
     "start": "nodemon ./dist/app.js",
     "build": "node app.ts"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
