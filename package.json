@@ -1,10 +1,10 @@
 {
   "name": "negisa",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "app.ts",
   "scripts": {
     "start": "nodemon ./dist/app.js",
-    "build": "node ./dist/app.js"
+    "build": "node ./app.js"
   },
   "keywords": [],
   "author": "",
