@@ -8,7 +8,7 @@ export default class UserService {
     public static checkResquest(user: IUserDTO) {
         const { username, personalnumber } = user
         if (!username || !personalnumber) {
-            throw ("היי.. סמנו לב שלא מלאת את כל הפרטים ההכרחיים")
+            throw ("היי.. שמנו לב שלא מלאת את כל הפרטים ההכרחיים")
         }
         return user
     }
@@ -17,8 +17,7 @@ export default class UserService {
         this.checkResquest(user)
         const { personalnumber } = user
         const userFromDB = await DataLayer.checkIfExist<IUser>( personalnumber , UserDB)
-        console.log(userFromDB,'user');
-        
+       
         return userFromDB
     }
 
@@ -36,15 +35,15 @@ export default class UserService {
         }
     }
 
-    public static async deleteUser(user: IUserDTO): Promise<string> {
+    public static async deleteUser(user: IUserDTO): Promise<{err:boolean,message:string}> {
         this.checkResquest(user)
         try {
             const userFromDB: IUser | null = await this.findUser(user)
             if (!userFromDB) {
-                throw new Error("User dosn't exists")
+                throw new Error("סועד לא קיים במערכת")
             }
             await DataLayer.deleteItem(user, UserDB)
-            return "User deleted"
+            return {err:false,message:`סועד ${user.username} נמחק בהצלחה`}
 
         } catch (err) {
             throw new Error(`${err}`)
@@ -57,6 +56,11 @@ export default class UserService {
             const userFromDB: IUser | null = await DataLayer.findOneItemById<IUser>(ObjId, UserDB)
             if (!userFromDB) {
                 throw new Error("User dosn't exists")
+            }
+            const phoneExist:IUser|null = await DataLayer.checkIfExist<IUser>(user.personalnumber, UserDB)
+            
+            if (phoneExist && phoneExist._id!.toString()! != userFromDB._id!.toString()) {
+                throw ("מספר הטלפון כבר קיים במערכת")
             }
             await DataLayer.updateItem<IUser>(user, userFromDB._id! as mongoose.Types.ObjectId, UserDB)
             return "User updated"

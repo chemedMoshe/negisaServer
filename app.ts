@@ -15,6 +15,5 @@ app.use(express.json())
 app.use(cookieParser())
 app.use('/user',userRouter)
 app.use('/credit',creditRouter)
-//async function  a(){await userService.updateUser({ username: 'nnegisa', personalnumber: 12234567890 },"6711a73894f6fa7b49de25aa")}
-//a().then(()=>{ 
+ 
 app.listen(3000, () => console.log(`Server running on port ${port}`))
