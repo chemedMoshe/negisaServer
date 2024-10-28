@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
+const credit_controller_1 = require("../controllers/credit.controller");
+exports.router = require('express').Router();
+exports.router.get('/', credit_controller_1.getAllCredits);
+exports.router.get('/:id', credit_controller_1.getCreditById);
+exports.router.get('/byuser/:id', credit_controller_1.getCreditesByUser);
+exports.router.post('/', credit_controller_1.createNewCredit);
+exports.router.put('/:id', credit_controller_1.updateCredit);
+exports.router.delete('/', credit_controller_1.deleteCredit);
+exports.default = exports.router;
