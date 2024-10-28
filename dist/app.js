@@ -14,7 +14,7 @@ const cors = require('cors');
 dotenv_1.default.config();
 (0, dbLayer_1.connectDB)();
 const port = process.env.PORT || 3000;
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use('/user', user_router_1.default);
