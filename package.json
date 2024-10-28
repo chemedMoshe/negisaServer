@@ -4,7 +4,7 @@
   "main": "app.ts",
   "scripts": {
    
-    "start": "ts-node --esm app.ts"
+    "start": "ts-node --esm ./dist/app.js"
   },
   "type": "module",
   "keywords": [],
