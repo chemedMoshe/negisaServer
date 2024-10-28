@@ -35,7 +35,7 @@ export const updateUser = async(req:Request,res:Response) => {
 
 export const getUserById = async(req:Request,res:Response) => {
     try {
-        const result = await UserService.getUserById(req.params.id)
+        const result = await UserService.getUserById(req.body)
         res.status(200).json(result)
     }
     catch (err) {   
@@ -50,5 +50,15 @@ export const getAllUsers = async(req:Request,res:Response) => {
     }
     catch (err) {   
         res.status(400).send(`${err}`)
+    } 
+}
+
+export const searchUser = async(req:Request,res:Response) => {
+    try {
+        const result = await UserService.searchUser(req.body)
+        res.status(200).json({err:false,result})
+    }
+    catch (err) {   
+        res.status(400).json({err:true,message:`${err}`})
     } 
 }

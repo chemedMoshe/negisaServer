@@ -3,6 +3,7 @@ import DataLayer from "../DataLayer/dataLayerFile";
 import IUserDTO from "../types/DTO.models/UserDTO";
 import { IUser } from "../types/interfaces/user.interface";
 import { UserDB } from "../types/Schema/userSchema";
+import ISearchDTO from "../types/DTO.models/searchDTO";
 
 export default class UserService {
     public static checkResquest(user: IUserDTO) {
@@ -91,6 +92,17 @@ export default class UserService {
         }
         catch (err) {
             throw new Error(`${err}`)
+        }
+    }
+
+    public static async searchUser(user: ISearchDTO) {
+        try {
+            
+            const userFromDB: IUser[] = await DataLayer.searchItems<IUser>(UserDB, "username", user.username)
+            return userFromDB||[]
+        }
+        catch (err) {
+            throw (`${err}`)
         }
     }
 }

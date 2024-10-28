@@ -1,9 +1,11 @@
-import { createNewUser, deleteUser, getAllUsers, getUserById, updateUser } from "../controllers/user,controller"
+import { createNewUser, deleteUser, getAllUsers, getUserById, searchUser, updateUser } from "../controllers/user,controller"
 import { Express, Router } from "express"
 
 export  const router:Router = require('express').Router()
 
 router.get('/',getAllUsers )
+
+router.post('/search',searchUser )
 
 router.get('/:id',getUserById )
 

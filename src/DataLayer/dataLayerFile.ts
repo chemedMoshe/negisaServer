@@ -57,4 +57,17 @@ export default class DataLayer {
             throw new Error(`${error}`)
         }
     }
+    public static searchItems = async<T>(category: mongoose.Model<T>, key:string, value:string): Promise<T[]>=>{
+        try{
+           
+            const filter = { [key]: { $regex: `^${value}`, $options: "i" } } as mongoose.FilterQuery<T>;
+            return await category.find(filter);}
+    catch (error) {
+       
+        
+        throw new Error(`${error}`)
+    }
 }
+
+}
+ 
